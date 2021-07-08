@@ -5,7 +5,7 @@ import Encabezado from "../Componentes/Encabezado";
 const Categorias = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Encabezado title={"Categoriasseseses"} />
+      <Encabezado title={"Categoriass"} />
       <Button
         title="Ir a Detalle"
         onPress={() => {
