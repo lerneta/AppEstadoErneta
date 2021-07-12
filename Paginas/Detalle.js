@@ -1,18 +1,36 @@
 import React from "react";
-import { StyleSheet, View, Button } from "react-native";
-import Encabezado from "../Componentes/Encabezado";
+import { StyleSheet, View } from "react-native";
 
-const Detalle = ({ navigation }) => {
+const Detalle = ({ route }) => {
+  const bread = route.params.bread;
+
   return (
     <View style={styles.container}>
-      <Encabezado title={"Detalle"} />
+      <TouchableCmp onPress={() => onSelect(item)}>
+        <View style={styles.row}>
+          <Text>{bread.nombre}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text>{bread.descripcion}</Text>
+        </View>
+        <View>
+          <Text>$ {bread.precio}</Text>
+        </View>
+      </TouchableCmp>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 100,
+    width: "100%",
+    backgroundColor: "#ccc",
+    padding: 8,
+    margin: 8,
+  },
+  row: {
+    flexDirection: "row",
   },
 });
 export default Detalle;
