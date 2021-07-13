@@ -2,9 +2,9 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StyleSheet, View, Button, FlatList } from "react-native";
 import Encabezado from "../Componentes/Encabezado";
-import { CATEGORIES } from "../Componentes/Mock-data";
+import { CATEGORIES } from "../Datos/Mock-data";
 import Griditem from "../Componentes/Griditem";
-import { COMIDAS } from "../Componentes/comidas";
+import { COMIDAS } from "../Datos/comidas";
 
 const Principal = ({ navigation }) => {
   const handlerSelectedCategory = (item) => {

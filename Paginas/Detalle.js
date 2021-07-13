@@ -1,20 +1,31 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  Platform,
+  Text,
+} from "react-native";
 
 const Detalle = ({ route }) => {
-  const bread = route.params.bread;
-
+  const bread = route.params;
+  console.log(bread);
+  let TouchableCmp = TouchableOpacity;
+  if (Platform.OS === "android" && Platform.version >= 21) {
+    TouchableCmp = TouchableNativeFeedback;
+  }
   return (
     <View style={styles.container}>
       <TouchableCmp onPress={() => onSelect(item)}>
         <View style={styles.row}>
-          <Text>{bread.nombre}</Text>
+          <Text style={styles.title}>{bread.name}</Text>
         </View>
         <View style={styles.row}>
-          <Text>{bread.descripcion}</Text>
+          <Text>{bread.description}</Text>
         </View>
         <View>
-          <Text>$ {bread.precio}</Text>
+          <Text>$ {bread.price}</Text>
         </View>
       </TouchableCmp>
     </View>
@@ -31,6 +42,9 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
+  },
+  title: {
+    fontSize: 25,
   },
 });
 export default Detalle;
