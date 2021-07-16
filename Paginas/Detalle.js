@@ -1,51 +1,26 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  Platform,
-  Text,
-} from "react-native";
-import { useSelector, connect } from "react-redux";
+import { View, Text, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
 const Detalle = () => {
-  const bread = useSelector((state) => state.bread.selected);
-  console.log(bread);
-  let TouchableCmp = TouchableOpacity;
-  if (Platform.OS === "android" && Platform.version >= 21) {
-    TouchableCmp = TouchableNativeFeedback;
-  }
+  const item = useSelector((state) => state.breads.selected) || {};
+
   return (
-    <View style={styles.container}>
-      <TouchableCmp onPress={() => onSelect(item)}>
-        <View style={styles.row}>
-          <Text style={styles.title}>{bread.name}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text>{bread.description}</Text>
-        </View>
-        <View>
-          <Text>$ {bread.price}</Text>
-        </View>
-      </TouchableCmp>
+    <View style={styles.screen}>
+      <Text>{item.name}</Text>
+      <Text>{item.description}</Text>
+      <Text>${item.price}</Text>
+      <Text>{item.weight}gr</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    height: 100,
-    width: "100%",
-    backgroundColor: "#ccc",
-    padding: 8,
-    margin: 8,
-  },
-  row: {
-    flexDirection: "row",
-  },
-  title: {
-    fontSize: 25,
+  screen: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
-export default connect()(Detalle);
+
+export default Detalle;

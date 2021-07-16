@@ -1,85 +1,33 @@
-import { NavigationContainer } from "@react-navigation/native";
 import React, { useEffect } from "react";
-import { useSelector, useDispatch, connect } from "react-redux";
-import Griditem from "../Componentes/Griditem";
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  Platform,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-} from "react-native";
-import { filteredBread, selectBread } from "../Store/actions/food.action";
-import { COMIDAS } from "../Datos/comidas";
+import { FlatList } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import BreadItem from "../Componentes/FoodItem";
+import { filterBread, selectBread } from "../Store/actions/food.action";
 
-const Categorias = ({ navigation, route }) => {
+const CategoryBreadScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const categoryBreads = useSelector((state) => state.breads.filteredBread);
+  const categoryBreads = useSelector((state) => state.breads.filteredBreads);
   const category = useSelector((state) => state.categories.selected);
 
   useEffect(() => {
-    dispatch(filteredBread(bread.id));
+    dispatch(filterBread(category.id));
   }, []);
 
-  let TouchableCmp = TouchableOpacity;
-  if (Platform.OS === "android" && Platform.version >= 21) {
-    TouchableCmp = TouchableNativeFeedback;
-  }
-
-  const handlerSelectedCategory = (item) => {
-    dispatch(selectCategory(item.id));
-    navigation.navigate("Detalle", { name: item.title });
+  const handleSelected = (item) => {
+    dispatch(selectBread(item.id));
+    navigation.navigate("Detalle", { name: item.name });
   };
-
-  const idcategoria = route.params.categoryId;
-  console.log("ID DE LA CATEGORIA");
-  const displayComidas = COMIDAS.filter(
-    (item) => item.category === idcategoria
+  const renderItem = ({ item }) => (
+    <BreadItem item={item} onSelected={handleSelected} />
   );
-  console.log("EL ROUTEO ES: ", route);
-  console.log("LAS COMIDAS SON: ", COMIDAS);
-  console.log(displayComidas);
 
-  const handlerSelected = (item) => {
-    navigation.navigate("Detalle", {
-      categoryId: item.id,
-      name: item.titulo,
-      price: item.price,
-      description: item.description,
-    });
-  };
-  const renderItem = (itemData) => (
-    <Griditem item={itemData.item} onSelected={handlerSelected} />
-  );
   return (
-    <View>
-      <FlatList
-        data={categoryBreads}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />
-    </View>
+    <FlatList
+      data={categoryBreads}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+    />
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  breadItem: {
-    height: 100,
-    width: "100%",
-    backgroundColor: "#CCC",
-    padding: 8,
-    margin: 8,
-  },
-  breadRow: {
-    flexDirection: "row",
-  },
-  title: {
-    fontSize: 20,
-  },
-});
-export default connect()(Categorias);
+export default CategoryBreadScreen;

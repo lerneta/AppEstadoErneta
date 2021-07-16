@@ -1,41 +1,29 @@
-import React, { useEffect } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { StyleSheet, View, Button, FlatList } from "react-native";
-import Encabezado from "../Componentes/Encabezado";
+import React from "react";
+import { FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { Provider } from "react-redux";
-import Griditem from "../Componentes/Griditem";
-import { COMIDAS } from "../Datos/comidas";
-import { filteredBreads, selectBread } from "../Store/actions/food.action";
+import CategoryGridItem from "../Componentes/CategoryGridItem";
+import { selectCategory } from "../Store/actions/category.action";
 
-const Principal = ({ navigation }) => {
+const CategoriesScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const categoryBreads = useSelector((state) => state.breads.filterBread);
-  const category = useSelector((state) => state.category.selected);
+  const breadCategories = useSelector((state) => state.categories.list);
 
-  const handlerSelectedCategory = (item) => {
-    navigation.navigate("Categoria", {
-      categoryId: item.id,
-      name: item.titulo,
-    });
+  const handleSelected = (item) => {
+    dispatch(selectCategory(item.id));
+    navigation.navigate("Categorias", { name: item.name });
   };
-  const renderGridItem = (itemData) => (
-    <Griditem item={itemData.item} onSelected={handlerSelectedCategory} />
-  );
 
+  const renderItem = ({ item }) => (
+    <CategoryGridItem item={item} onSelected={handleSelected} />
+  );
   return (
     <FlatList
-      data={CATEGORIES}
+      data={breadCategories}
+      renderItem={renderItem}
       keyExtractor={(item) => item.id}
-      renderItem={renderGridItem}
       numColumns={2}
     />
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-export default Principal;
+export default CategoriesScreen;

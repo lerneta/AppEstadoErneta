@@ -1,29 +1,29 @@
-import { COMIDAS } from "../../Datos/comidas";
-import { SELECT_FOOD, FILTERED_FOOD } from "../actions/food.action";
+import { BREADS } from "../../Datos/comidas";
+import { SELECT_BREAD, FILTER_BREAD } from "../actions/food.action";
 
-const initialState = {
-  comidas: COMIDAS,
-  filtered: [],
+const INITIAL_STATE = {
+  list: BREADS,
+  filteredBreads: [],
   selected: null,
 };
 
-const FoodReducer = (state = initialState, action) => {
+const BreadReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SELECT_FOOD:
+    case SELECT_BREAD:
       return {
         ...state,
-        selected: state.comidas.find((bread) => bread.id === action.breadID),
+        selected: state.list.find((bread) => bread.id === action.breadID),
       };
-    case FILTERED_BREAD:
+    case FILTER_BREAD:
       return {
         ...state,
-        filteredBread: state.comidas.filter(
+        filteredBreads: state.list.filter(
           (bread) => bread.category === action.categoryID
         ),
       };
     default:
-      return state;
+      return { ...state };
   }
 };
 
-export default FoodReducer;
+export default BreadReducer;
