@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StyleSheet, View, Button, FlatList } from "react-native";
 import Encabezado from "../Componentes/Encabezado";
-import { CATEGORIES } from "../Datos/Mock-data";
+import { useSelector, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import Griditem from "../Componentes/Griditem";
 import { COMIDAS } from "../Datos/comidas";
+import { filteredBreads, selectBread } from "../Store/actions/food.action";
 
 const Principal = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const categoryBreads = useSelector((state) => state.breads.filterBread);
+  const category = useSelector((state) => state.category.selected);
+
   const handlerSelectedCategory = (item) => {
     navigation.navigate("Categoria", {
       categoryId: item.id,

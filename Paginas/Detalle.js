@@ -7,9 +7,10 @@ import {
   Platform,
   Text,
 } from "react-native";
+import { useSelector, connect } from "react-redux";
 
-const Detalle = ({ route }) => {
-  const bread = route.params;
+const Detalle = () => {
+  const bread = useSelector((state) => state.bread.selected);
   console.log(bread);
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android" && Platform.version >= 21) {
@@ -47,4 +48,4 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
 });
-export default Detalle;
+export default connect()(Detalle);
