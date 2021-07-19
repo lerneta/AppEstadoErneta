@@ -6,6 +6,7 @@ import Principal from "../Paginas/Principal";
 import Categorias from "../Paginas/Categorias";
 import Detalle from "../Paginas/Detalle";
 import Colors from "./Colores";
+import Carrito from "../Paginas/Carrito";
 
 const Stack = createStackNavigator();
 
@@ -24,9 +25,14 @@ const BreadNavigator = () => (
       }}
     >
       <Stack.Screen
+        name="Carrito"
+        component={Carrito}
+        options={{ title: "Carrito" }}
+      />
+      <Stack.Screen
         name="Principal"
         component={Principal}
-        options={{ title: "Mi Pan" }}
+        options={{ title: "Principal" }}
       />
       <Stack.Screen
         name="Categorias"

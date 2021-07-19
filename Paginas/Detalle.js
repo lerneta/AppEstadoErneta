@@ -1,9 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { View, Text, StyleSheet, Button } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import ShowCart from "../Componentes/ShowCart";
+import { addItem } from "../Store/actions/cart.action";
+import Colores from "../Componentes/Colores";
 
-const Detalle = () => {
+const Detalle = ({ navigation }) => {
+  const dispatch = useDispatch();
   const item = useSelector((state) => state.breads.selected) || {};
+
+  const handleAddItem = () => dispatch(addItem(item));
 
   return (
     <View style={styles.screen}>
@@ -11,6 +17,12 @@ const Detalle = () => {
       <Text>{item.description}</Text>
       <Text>${item.price}</Text>
       <Text>{item.weight}gr</Text>
+      <Button
+        title="AGREGAR AL CARRITO"
+        onPress={handleAddItem}
+        color={Colores.accent}
+      />
+      <ShowCart navigation={navigation} />
     </View>
   );
 };
